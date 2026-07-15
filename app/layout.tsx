@@ -1,16 +1,19 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import KakaoInit from '@/components/KakaoInit';
+import { invitationData } from '@/data/invitation';
+import { formatWeddingDateShort } from '@/lib/date';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
-const ogImage = `${siteUrl}/images/og-image.jpg`;
+const { groom, bride, venue, weddingDate, images } = invitationData;
+const ogImage = images.og || `${siteUrl}/images/og-image.jpg`;
 
 export const metadata: Metadata = {
-  title: '강동욱 · 여다은 결혼합니다',
-  description: '2026. 09. 06. (일) 오후 3시 · 월드컵컨벤션 임페리얼볼룸',
+  title: `${groom.name} · ${bride.name} 결혼합니다`,
+  description: `${formatWeddingDateShort(weddingDate)} · ${venue.name}`,
   openGraph: {
-    title: '강동욱 ❤ 여다은 결혼합니다',
-    description: '2026. 09. 06. (일) 오후 3시\n월드컵컨벤션 임페리얼볼룸',
+    title: `${groom.name} ❤ ${bride.name} 결혼합니다`,
+    description: `${formatWeddingDateShort(weddingDate)}\n${venue.name}`,
     url: siteUrl,
     type: 'website',
     images: [
