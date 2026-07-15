@@ -1,3 +1,6 @@
+import { invitationData } from '@/data/invitation';
+import { formatWeddingDateShort } from './date';
+
 declare global {
   interface Window {
     Kakao: any;
@@ -32,13 +35,15 @@ export const shareKakao = () => {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
+  const { groom, bride, venue, weddingDate, images } = invitationData;
+  const imageUrl = images.og || `${siteUrl}/images/og-image.jpg`;
 
   window.Kakao.Share.sendDefault({
     objectType: 'feed',
     content: {
-      title: '강동욱 ❤ 여다은 결혼합니다',
-      description: '2026. 09. 06. (일) 오후 3시\n월드컵컨벤션 임페리얼볼룸',
-      imageUrl: `${siteUrl}/images/og-image.jpg`,
+      title: `${groom.name} ❤ ${bride.name} 결혼합니다`,
+      description: `${formatWeddingDateShort(weddingDate)}\n${venue.name}`,
+      imageUrl,
       link: {
         mobileWebUrl: siteUrl,
         webUrl: siteUrl,
