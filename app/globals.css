@@ -1,63 +1,26 @@
-:root {
-  --bg-ivory: #faf7f2;
-  --bg-panel: #f3ece3;
-  --wine: #6e2e3a;
-  --wine-soft: #8c4a57;
-  --gold: #a8834b;
-  --gold-soft: #c9ad82;
-  --ink: #2a2521;
-  --ink-soft: #6b6259;
-  --line: #dcd0be;
-  --white: #ffffff;
-}
+@import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@theme {
+  --color-ivory: #faf7f2;
+  --color-panel: #f3ece3;
+  --color-wine: #6e2e3a;
+  --color-wine-soft: #8c4a57;
+  --color-gold: #a8834b;
+  --color-gold-soft: #c9ad82;
+  --color-ink: #2a2521;
+  --color-ink-soft: #6b6259;
+  --color-line: #dcd0be;
+
+  --font-garamond: 'Cormorant Garamond', serif;
+  --font-serif-kr: 'Noto Serif KR', serif;
 }
 
 body {
-  background: var(--bg-panel);
-  color: var(--ink);
-  font-family: 'Noto Serif KR', serif;
-  -webkit-font-smoothing: antialiased;
+  @apply bg-panel text-ink font-serif-kr antialiased;
   line-height: 1.6;
 }
 
-.card {
-  width: 100%;
-  max-width: 480px;
-  background: var(--bg-ivory);
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.eyebrow {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 15px;
-  letter-spacing: 0.18em;
-  color: var(--wine-soft);
-  text-align: center;
-  margin-bottom: 6px;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--ink);
-  margin-bottom: 36px;
-}
-
-section {
-  padding: 64px 28px;
-}
-
-/* Animations */
+/* ================= SCROLL REVEAL ================= */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -101,6 +64,7 @@ section {
   transition-delay: 0.6s;
 }
 
+/* ================= LOAD-IN (진입 애니메이션) ================= */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -130,6 +94,36 @@ section {
   animation-delay: 0.8s;
 }
 
+/* ================= MODAL ================= */
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-modal-in {
+  animation: modalIn 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ================= ENDING WAVE ================= */
+@keyframes waveFlow {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ending-wave svg {
+  animation: waveFlow 14s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-group > .reveal-child {
@@ -140,6 +134,9 @@ section {
   .load-in {
     opacity: 1 !important;
     transform: none !important;
+    animation: none !important;
+  }
+  .ending-wave svg {
     animation: none !important;
   }
 }
