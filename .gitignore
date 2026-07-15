@@ -47,6 +47,6 @@ node_modules
 package-lock.json
 
 # 실제 유저(신랑/신부) 개인정보 포함 파일 — git 커밋 금지
-src/data/invitation.ts
+src/data/invitation.data.ts
 docs/wedding-invitation.html
 
