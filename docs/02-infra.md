@@ -13,37 +13,42 @@
 **서버(Spring Boot 등)는 이 프로젝트에서 사용하지 않음.** 모든 데이터 흐름은 클라이언트 → Firebase SDK 직접 호출.
 
 ## 프로젝트 구조
+> 아래는 실제 구현 후 갱신된 최신 구조 (최초 설계안과 다름 — `ui/`는 `design-system/`으로 대체, `data/`
+> 신설, `modals/` 별도 분리). Next.js 버전도 실제로는 16.2.10 사용 중 (최초 선택은 14).
 ```
+app/
+  page.tsx                    # 메인 청첩장 페이지 (전체 섹션 조합)
+  layout.tsx                   # 메타데이터(OG 포함), 폰트 로드
+  globals.css                  # Tailwind v4 @theme 디자인 토큰 + reveal/애니메이션 CSS
 src/
-  app/
-    page.tsx                 # 메인 청첩장 페이지 (전체 섹션 조합)
-    layout.tsx                # 메타데이터, 폰트 로드
-    globals.css                # CSS 변수(디자인 토큰), 리셋
+  data/
+    invitation.ts               # 청첩장 전체 데이터(이름/날짜/장소/계좌/연락처/이미지 슬롯) 단일 config
+  design-system/
+    Divider.tsx                 # SVG 라인아트 디바이더
+    SectionHeading.tsx           # eyebrow + 섹션 타이틀 패턴
+    PlaceholderImage.tsx         # 이미지 자리표시자 (src 채우면 실제 <img>로 전환)
+    OutlineButton.tsx
+    Modal.tsx                    # 모달 셸 (Portal 기반)
+    AccordionItem.tsx            # 계좌번호 아코디언
+    index.ts                     # 배럴 export
   components/
     sections/
-      Hero.tsx
-      Invitation.tsx
-      AboutUs.tsx
-      WeddingDay.tsx           # 캘린더 + 카운트다운
-      Location.tsx             # 지도 + 오시는 길
-      Gallery.tsx
-      Guestbook.tsx
-      Account.tsx
-      RsvpWreath.tsx           # 참석의사 전달 + 화환
-      Ending.tsx
-    ui/
-      Divider.tsx               # SVG 라인아트 디바이더
-      RevealSection.tsx         # 스크롤 리빌 애니메이션 wrapper
-      AccordionItem.tsx         # 계좌번호 아코디언
+      Hero.tsx, Invitation.tsx, AboutUs.tsx, WeddingDay.tsx, Location.tsx,
+      Gallery.tsx, Guestbook.tsx, Account.tsx, RsvpWreath.tsx, Ending.tsx
+    modals/
+      ContactModal.tsx, RsvpModal.tsx
+    KakaoInit.tsx
   lib/
-    firebase.ts                # Firebase 초기화
-    firestore.ts                # CRUD 함수 (guestbook, gallery, rsvp)
-    kakao.ts                    # Kakao SDK 초기화 + 공유 함수
+    firebase.ts                 # Firebase 초기화 (작성됨, 실제 프로젝트 연결/호출은 아직 없음)
+    firestore.ts                 # CRUD 함수 (guestbook, gallery, rsvp) — 작성됨, 컴포넌트에서 미사용
+    kakao.ts                     # Kakao SDK 초기화 + 공유 함수
+    calendar.ts                  # 예식 날짜로부터 달력 그리드 자동 생성
+    date.ts                      # 날짜 포맷 유틸
   types/
-    invitation.ts               # 타입 정의
+    invitation.ts                # Firestore 연동용 타입 (GuestbookEntry/RsvpResponse/GalleryPhoto 등)
   hooks/
-    useCountdown.ts             # 카운트다운 로직
-    useScrollReveal.ts           # IntersectionObserver 훅
+    useCountdown.ts               # 카운트다운 로직
+    useScrollReveal.ts             # IntersectionObserver 훅
 ```
 
 ## 환경변수 (`.env.local`)
@@ -76,11 +81,18 @@ rsvp/{responseId}
   - name: string
   - side: 'groom' | 'bride'
   - attending: boolean
+  - meal: boolean          # RsvpModal에 이미 있는 필드, 스키마에 누락돼 있어 추가
   - guestCount: number
   - message?: string
   - createdAt: timestamp
 ```
 청첩장이 하나뿐이라 `invitationId` 필드는 생략(단일 문서/컬렉션 구조로 단순화).
+
+## 청첩장 데이터 (`src/data/invitation.ts`)
+Firestore로 가지 않는 정적 콘텐츠(이름/날짜/장소/계좌/연락처/이미지 URL)는 `src/data/invitation.ts`
+단일 config로 분리됨 (구현 상세는 `03-implementation.md` 참고). **주의**: 이 파일은 일반 소스 코드로
+git에 커밋되므로, 실제 계좌번호·전화번호 등 민감정보를 채워 넣기 전에 그대로 커밋해도 괜찮을지
+결정 필요 (비공개 저장소 여부, 필요 시 민감 필드만 환경변수/Firestore로 분리하는 방안 고려).
 
 ## Firestore 보안 규칙 방향
 - `guestbook`, `rsvp`: 누구나 `create` 가능 / `update`, `delete`는 비밀번호 필드 대조 방식으로 제한
