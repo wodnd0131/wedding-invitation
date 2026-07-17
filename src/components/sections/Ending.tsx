@@ -25,7 +25,7 @@ export default function Ending() {
       </div>
 
       <PlaceholderImage
-        className="mb-[34px] h-[300px] text-[13px]"
+        className="mb-[34px] h-[368px] text-[13px]"
         src={images.ending}
         alt="마지막 사진"
         label={
