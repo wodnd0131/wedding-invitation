@@ -8,8 +8,8 @@ export default function Ending() {
   const { images } = invitationData;
 
   return (
-    <section className="reveal pb-[70px] pt-10 text-center">
-      <p className="mb-8 px-7 text-[24px] leading-[2] text-ink">
+    <section className="reveal pb-[70px] pt-[27px] text-center">
+      <p className="mb-8 px-7 text-[18px] leading-[2] text-ink">
         저희의 새로운 시작을<br />
         함께 해주셔서 감사합니다.
       </p>
