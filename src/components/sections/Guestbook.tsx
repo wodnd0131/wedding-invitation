@@ -6,6 +6,9 @@ import { getGuestbookEntries } from '@/lib/firestore';
 import { GuestbookEntry } from '@/types/invitation';
 import GuestbookWriteModal from '@/components/modals/GuestbookWriteModal';
 import GuestbookDeleteModal from '@/components/modals/GuestbookDeleteModal';
+import GuestbookListModal from '@/components/modals/GuestbookListModal';
+
+const PREVIEW_COUNT = 5;
 
 function formatDate(date: Date) {
   const y = date.getFullYear();
@@ -18,11 +21,12 @@ export default function Guestbook() {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [writeOpen, setWriteOpen] = useState(false);
+  const [listOpen, setListOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const fetchEntries = useCallback(async () => {
     try {
-      const list = await getGuestbookEntries();
+      const list = await getGuestbookEntries(200);
       setEntries(list);
     } finally {
       setLoading(false);
@@ -32,6 +36,8 @@ export default function Guestbook() {
   useEffect(() => {
     fetchEntries();
   }, [fetchEntries]);
+
+  const preview = entries.slice(0, PREVIEW_COUNT);
 
   return (
     <section className="reveal py-16 px-7">
@@ -49,7 +55,7 @@ export default function Guestbook() {
       )}
 
       <div className="reveal-group">
-        {entries.map((entry) => (
+        {preview.map((entry) => (
           <div key={entry.id} className="reveal-child border-b border-line py-4">
             <div className="mb-1.5 flex items-center justify-between">
               <span className="text-[13.5px] font-semibold">from. {entry.name}</span>
@@ -66,11 +72,21 @@ export default function Guestbook() {
         ))}
       </div>
 
-      <a href="#" className="mt-[22px] block text-center text-[12.5px] tracking-[0.05em] text-wine underline underline-offset-4">
+      <button
+        type="button"
+        onClick={() => setListOpen(true)}
+        className="mt-[22px] block w-full cursor-pointer border-none bg-transparent text-center text-[12.5px] tracking-[0.05em] text-wine underline underline-offset-4"
+      >
         더보기
-      </a>
+      </button>
 
       <GuestbookWriteModal isOpen={writeOpen} onClose={() => setWriteOpen(false)} onSuccess={fetchEntries} />
+      <GuestbookListModal
+        isOpen={listOpen}
+        onClose={() => setListOpen(false)}
+        entries={entries}
+        onDelete={(id) => setDeleteTarget(id)}
+      />
       <GuestbookDeleteModal
         isOpen={deleteTarget !== null}
         entryId={deleteTarget}
