@@ -8,7 +8,12 @@ export default function Ending() {
   const { images } = invitationData;
 
   return (
-    <section className="reveal pb-[70px] text-center">
+    <section className="reveal pb-[70px] pt-10 text-center">
+      <p className="mb-8 px-7 text-[16px] leading-[2] text-ink">
+        저희의 새로운 시작을<br />
+        함께 해주셔서 감사합니다.
+      </p>
+
       <div className="ending-wave h-[34px] w-full overflow-hidden leading-none" aria-hidden="true">
         <svg viewBox="0 0 400 34" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-[200%]">
           <path
@@ -23,11 +28,6 @@ export default function Ending() {
           />
         </svg>
       </div>
-
-      <p className="mb-6 mt-8 px-7 text-[14.5px] leading-[2] text-ink">
-        저희의 새로운 시작을<br />
-        함께 해주셔서 감사합니다.
-      </p>
 
       <PlaceholderImage
         className="mb-[34px] h-[368px] text-[13px]"
