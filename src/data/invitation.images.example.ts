@@ -10,7 +10,13 @@ export const images: ImageSlots = {
   ending: 'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/ending.jpg',
   og: 'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/og.jpg',
   gallery: [
-    'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/gallery-1.jpg',
-    'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/gallery-2.jpg',
+    {
+      thumb: 'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/gallery-1-thumb.jpg',
+      full: 'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/gallery-1.jpg',
+    },
+    {
+      thumb: 'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/gallery-2-thumb.jpg',
+      full: 'https://example-bucket.s3.ap-northeast-2.amazonaws.com/image/gallery-2.jpg',
+    },
   ],
 };

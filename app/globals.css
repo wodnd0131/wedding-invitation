@@ -110,6 +110,37 @@ body {
   animation: modalIn 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+/* ================= GALLERY LIGHTBOX ================= */
+@keyframes lightboxSlideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes lightboxSlideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-lightbox-slide-right {
+  animation: lightboxSlideFromRight 0.3s ease-out;
+}
+
+.animate-lightbox-slide-left {
+  animation: lightboxSlideFromLeft 0.3s ease-out;
+}
+
 /* ================= ENDING WAVE ================= */
 @keyframes waveFlow {
   from {
@@ -137,6 +168,10 @@ body {
     animation: none !important;
   }
   .ending-wave svg {
+    animation: none !important;
+  }
+  .animate-lightbox-slide-right,
+  .animate-lightbox-slide-left {
     animation: none !important;
   }
 }

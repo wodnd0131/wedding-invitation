@@ -24,13 +24,18 @@ export interface TransitItem {
   lines: string[];
 }
 
+export interface GalleryImage {
+  thumb: string;
+  full?: string;
+}
+
 export interface ImageSlots {
   hero?: string;
   groomProfile?: string;
   brideProfile?: string;
   ending?: string;
   og?: string;
-  gallery: (string | undefined)[];
+  gallery: GalleryImage[];
 }
 
 export interface InvitationData {
