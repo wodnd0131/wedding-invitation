@@ -88,11 +88,22 @@ rsvp/{responseId}
 ```
 청첩장이 하나뿐이라 `invitationId` 필드는 생략(단일 문서/컬렉션 구조로 단순화).
 
-## 청첩장 데이터 (`src/data/invitation.ts`)
-Firestore로 가지 않는 정적 콘텐츠(이름/날짜/장소/계좌/연락처/이미지 URL)는 `src/data/invitation.ts`
-단일 config로 분리됨 (구현 상세는 `03-implementation.md` 참고). **주의**: 이 파일은 일반 소스 코드로
-git에 커밋되므로, 실제 계좌번호·전화번호 등 민감정보를 채워 넣기 전에 그대로 커밋해도 괜찮을지
-결정 필요 (비공개 저장소 여부, 필요 시 민감 필드만 환경변수/Firestore로 분리하는 방안 고려).
+## 청첩장 데이터 (`src/data/`)
+Firestore로 가지 않는 정적 콘텐츠(이름/날짜/장소/계좌/연락처/이미지 URL)는 아래처럼 타입과 실제 값을
+분리해서 관리:
+- `invitation.types.ts` — 타입 정의만, git 커밋됨
+- `invitation.data.example.ts` — 더미 값 템플릿, git 커밋됨
+- `invitation.data.ts` — 실제 개인정보, **`.gitignore` 처리되어 git에 커밋되지 않음**. 로컬에서는
+  `invitation.data.example.ts`를 복사해서 채움
+- `invitation.ts` — 위 둘을 이어주는 barrel export, 컴포넌트는 전부 이 경로로 import
+
+**배포(Vercel) 시 주의**: `invitation.data.ts`는 git에 없으므로 Vercel이 clone한 저장소에도 없어
+그대로 빌드하면 `Module not found: Can't resolve './invitation.data'` 에러가 남. 이를 위해
+`scripts/generate-invitation-data.js`를 `prebuild` 스크립트로 등록해 둠 — Vercel 프로젝트의
+환경변수 `INVITATION_DATA_JSON`에 데이터 전체를 한 줄 JSON으로 넣어두면, 빌드 직전에 이 스크립트가
+`src/data/invitation.data.ts`를 자동 생성함. `weddingDate`는 JSON에서 ISO 문자열로 넣고 스크립트가
+`new Date(...)`로 복원. 로컬 개발 환경에서는 이 환경변수를 설정하지 않고 `invitation.data.ts`를
+직접 만들어 쓰면 스크립트가 그냥 스킵됨 (기존 로컬 워크플로우 그대로 유지).
 
 ## Firestore 보안 규칙 방향
 - `guestbook`, `rsvp`: 누구나 `create` 가능 / `update`, `delete`는 비밀번호 필드 대조 방식으로 제한
