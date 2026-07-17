@@ -45,14 +45,14 @@ export const invitationData: CoreInvitationData = {
   },
   contacts: {
     groom: [
-      { role: '신랑', name: '홍길동' },
-      { role: '신랑 아버님', name: '홍판서' },
-      { role: '신랑 어머님', name: '춘섬' },
+      { role: '신랑', name: '홍길동', phone: '010-0000-0000' },
+      { role: '신랑 아버님', name: '홍판서', phone: '010-0000-0000' },
+      { role: '신랑 어머님', name: '춘섬', phone: '010-0000-0000' },
     ],
     bride: [
-      { role: '신부', name: '김영희' },
-      { role: '신부 아버님', name: '김철수' },
-      { role: '신부 어머님', name: '이순자' },
+      { role: '신부', name: '김영희', phone: '010-0000-0000' },
+      { role: '신부 아버님', name: '김철수', phone: '010-0000-0000' },
+      { role: '신부 어머님', name: '이순자', phone: '010-0000-0000' },
     ],
   },
 };
