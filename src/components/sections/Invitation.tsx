@@ -20,7 +20,7 @@ export default function Invitation() {
       <p className="mb-5 text-center text-[14.5px] leading-[2] text-ink">
         평생 서로를 귀히 여기며<br />
         처음의 설렘과 순수함을 잃지 않고<br />
-        존중하고 아껴 나가겠습니다.
+        서로를 존중하고 아껴 나가겠습니다.
       </p>
       <div className="mt-9 flex items-center justify-center gap-[22px] text-center text-[13.5px] text-ink-soft">
         <div>

@@ -4,7 +4,6 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Divider } from '@/design-system';
 import Hero from '@/components/sections/Hero';
 import Invitation from '@/components/sections/Invitation';
-import AboutUs from '@/components/sections/AboutUs';
 import WeddingDay from '@/components/sections/WeddingDay';
 import Location from '@/components/sections/Location';
 import Gallery from '@/components/sections/Gallery';
@@ -22,8 +21,6 @@ export default function Home() {
         <Hero />
         <Divider />
         <Invitation />
-        <Divider />
-        <AboutUs />
         <Divider />
         <WeddingDay />
         <Divider />

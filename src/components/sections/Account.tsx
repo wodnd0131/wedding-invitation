@@ -53,7 +53,7 @@ export default function Account() {
       <div className="mb-8 text-center text-[12.5px] leading-[1.9] text-ink-soft">
         참석이 어려우신 분들을 위해<br />
         계좌번호를 안내해 드립니다.<br />
-        너그러운 마음으로 양해 부탁드립니다.
+        보내주신 마음 잘 간직하며 살겠습니다.
       </div>
 
       <div className="reveal-group flex flex-col gap-3.5">
