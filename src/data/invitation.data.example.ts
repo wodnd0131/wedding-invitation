@@ -20,11 +20,6 @@ export const invitationData: InvitationData = {
   venue: {
     name: '샘플웨딩홀 3F, 그랜드볼룸',
     address: '서울 강남구 테헤란로 1',
-    mapLinks: [
-      { label: '네이버지도', href: '#' },
-      { label: '티맵', href: '#' },
-      { label: '카카오맵', href: '#' },
-    ],
     transit: [
       {
         label: '주차',

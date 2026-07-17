@@ -1,11 +1,14 @@
 'use client';
 
 import { Fragment } from 'react';
-import { PlaceholderImage, SectionHeading } from '@/design-system';
+import { SectionHeading } from '@/design-system';
+import { KakaoMap } from '@/components/KakaoMap';
 import { invitationData } from '@/data/invitation';
+import { buildMapLinks } from '@/lib/map';
 
 export default function Location() {
   const { venue } = invitationData;
+  const mapLinks = buildMapLinks(venue.address);
 
   return (
     <section className="reveal py-16 px-7">
@@ -14,20 +17,15 @@ export default function Location() {
       <div className="mb-1.5 text-center text-[16px] font-semibold">{venue.name}</div>
       <div className="mb-6 text-center text-[12.5px] text-ink-soft">{venue.address}</div>
 
-      <PlaceholderImage
-        className="mb-5 h-[200px] text-[12.5px]"
-        label={
-          <>
-            지도가 여기에 표시됩니다<br />(네이버맵 API 연동 예정)
-          </>
-        }
-      />
+      <KakaoMap address={venue.address} name={venue.name} className="mb-5 h-[200px]" />
 
       <div className="flex gap-2">
-        {venue.mapLinks.map((link) => (
+        {mapLinks.map((link) => (
           <a
             key={link.label}
             href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-1 border border-line py-2.5 text-center text-[12px] text-ink no-underline"
           >
             {link.label}

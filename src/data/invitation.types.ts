@@ -24,11 +24,6 @@ export interface TransitItem {
   lines: string[];
 }
 
-export interface MapLink {
-  label: string;
-  href: string;
-}
-
 export interface ImageSlots {
   hero?: string;
   groomProfile?: string;
@@ -45,7 +40,6 @@ export interface InvitationData {
   venue: {
     name: string;
     address: string;
-    mapLinks: MapLink[];
     transit: TransitItem[];
   };
   accounts: {
