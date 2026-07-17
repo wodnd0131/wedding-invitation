@@ -29,10 +29,10 @@ export default function Hero() {
         </div>
       </div>
       <div className="load-in d3 mt-7 text-center text-[18px]">
-        <span className="mr-1 font-garamond text-[15px] italic text-wine-soft">신랑</span>
+        <span className="mr-2.5 font-garamond text-[15px] italic text-wine-soft">신랑</span>
         {groom.name}
         <span className="mx-3.5 text-gold">|</span>
-        <span className="mr-1 font-garamond text-[15px] italic text-wine-soft">신부</span>
+        <span className="mr-2.5 font-garamond text-[15px] italic text-wine-soft">신부</span>
         {bride.name}
       </div>
       <div className="load-in d4 mt-2.5 text-center text-[13px] tracking-[0.03em] text-ink-soft">
