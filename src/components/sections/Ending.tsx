@@ -24,6 +24,11 @@ export default function Ending() {
         </svg>
       </div>
 
+      <p className="mb-6 mt-8 px-7 text-[14.5px] leading-[2] text-ink">
+        저희의 새로운 시작을<br />
+        함께 해주셔서 감사합니다.
+      </p>
+
       <PlaceholderImage
         className="mb-[34px] h-[368px] text-[13px]"
         src={images.ending}
@@ -36,10 +41,6 @@ export default function Ending() {
       />
 
       <div className="px-7">
-        <p className="mb-5 text-[14.5px] leading-[2] text-ink">
-          저희의 새로운 시작을<br />
-          함께 해주셔서 감사합니다.
-        </p>
         <div className="mx-auto mb-5 h-px w-12 bg-gold-soft" />
         {/* e-names(이름 표시)는 목업 원본에서도 주석 처리된 상태 — "루시드 아이콘 같은걸로 이쁘게만들기" 메모 참고, 추후 아이콘 확정 시 노출 */}
 
