@@ -18,8 +18,7 @@ export interface RsvpResponse {
   name: string;
   side: 'groom' | 'bride';
   attending: boolean;
-  guestCount: number;
-  message?: string;
+  meal: boolean;
   createdAt: Date;
 }
 

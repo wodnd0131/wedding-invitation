@@ -60,15 +60,13 @@ export const addRsvpResponse = async (
   name: string,
   side: 'groom' | 'bride',
   attending: boolean,
-  guestCount: number,
-  message?: string
+  meal: boolean
 ): Promise<string> => {
   const docRef = await addDoc(collection(db, 'rsvp'), {
     name,
     side,
     attending,
-    guestCount,
-    message,
+    meal,
     createdAt: new Date(),
   });
   return docRef.id;
@@ -77,10 +75,17 @@ export const addRsvpResponse = async (
 export const getRsvpResponses = async () => {
   const q = query(collection(db, 'rsvp'), orderBy('createdAt', 'desc'));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Omit<RsvpResponse, 'id'>),
-  })) as RsvpResponse[];
+  return snapshot.docs.map((docSnap) => {
+    const data = docSnap.data();
+    return {
+      id: docSnap.id,
+      name: data.name,
+      side: data.side,
+      attending: data.attending,
+      meal: data.meal,
+      createdAt: data.createdAt?.toDate?.() ?? new Date(),
+    } as RsvpResponse;
+  });
 };
 
 // ========== Gallery ==========

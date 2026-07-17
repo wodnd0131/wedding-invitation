@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Modal } from '@/design-system';
+import { addRsvpResponse } from '@/lib/firestore';
 
 interface ToggleOption {
   label: string;
@@ -46,16 +47,26 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
   const [name, setName] = useState('');
   const [meal, setMeal] = useState('yes');
   const [agree, setAgree] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const ready = name.trim().length > 0 && agree;
 
-  const handleSubmit = () => {
-    if (!ready) return;
-    // TODO: Firestore 'rsvp' 컬렉션에 저장하는 로직으로 교체
-    alert('참석 의사가 전달되었습니다. 감사합니다!');
-    setName('');
-    setAgree(false);
-    onClose();
+  const handleSubmit = async () => {
+    if (!ready || submitting) return;
+    setSubmitting(true);
+    setError('');
+    try {
+      await addRsvpResponse(name.trim(), side as 'groom' | 'bride', attend === 'yes', meal === 'yes');
+      alert('참석 의사가 전달되었습니다. 감사합니다!');
+      setName('');
+      setAgree(false);
+      onClose();
+    } catch {
+      setError('전달에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -122,13 +133,16 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
         </a>
       </label>
 
+      {error && <div className="mb-3 text-center text-[12px] text-wine">{error}</div>}
+
       <button
         onClick={handleSubmit}
+        disabled={!ready || submitting}
         className={`w-full border-none py-[14px] text-center text-[14px] tracking-[0.06em] text-white transition-colors ${
-          ready ? 'cursor-pointer bg-wine' : 'cursor-not-allowed bg-line'
+          ready && !submitting ? 'cursor-pointer bg-wine' : 'cursor-not-allowed bg-line'
         }`}
       >
-        전달하기
+        {submitting ? '전달 중...' : '전달하기'}
       </button>
     </Modal>
   );
