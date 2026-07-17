@@ -55,6 +55,11 @@ export const deleteGuestbookEntry = async (entryId: string, passwordHash: string
   await deleteDoc(ref);
 };
 
+// 관리자 페이지 전용 — 비밀번호 대조 없이 바로 삭제
+export const deleteGuestbookEntryAdmin = async (entryId: string) => {
+  await deleteDoc(doc(db, 'guestbook', entryId));
+};
+
 // ========== RSVP ==========
 export const addRsvpResponse = async (
   name: string,
