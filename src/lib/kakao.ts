@@ -1,3 +1,6 @@
+import { invitationData } from '@/data/invitation';
+import { formatWeddingDateShort } from './date';
+
 declare global {
   interface Window {
     Kakao: any;
@@ -18,4 +21,42 @@ export const initKakao = () => {
     }
   };
   document.head.appendChild(script);
+};
+
+export const shareKakao = () => {
+  if (typeof window === 'undefined' || !window.Kakao) {
+    console.error('Kakao SDK not loaded');
+    return;
+  }
+
+  if (!window.Kakao.isInitialized()) {
+    console.error('Kakao not initialized');
+    return;
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
+  const { groom, bride, venue, weddingDate, images } = invitationData;
+  const imageUrl = images.og || `${siteUrl}/images/og-image.jpg`;
+
+  window.Kakao.Share.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: `${groom.name} ❤ ${bride.name} 결혼합니다`,
+      description: `${formatWeddingDateShort(weddingDate)}\n${venue.name}`,
+      imageUrl,
+      link: {
+        mobileWebUrl: siteUrl,
+        webUrl: siteUrl,
+      },
+    },
+    buttons: [
+      {
+        title: '청첩장 보기',
+        link: {
+          mobileWebUrl: siteUrl,
+          webUrl: siteUrl,
+        },
+      },
+    ],
+  });
 };

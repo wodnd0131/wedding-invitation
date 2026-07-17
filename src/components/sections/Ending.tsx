@@ -1,21 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
-import { PlaceholderImage, OutlineButton } from '@/design-system';
+import { PlaceholderImage } from '@/design-system';
+import { shareKakao } from '@/lib/kakao';
 import { invitationData } from '@/data/invitation';
 
 export default function Ending() {
   const { images } = invitationData;
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyLink = () => {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.href;
-    navigator.clipboard.writeText(siteUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    });
-  };
 
   return (
     <section className="reveal pb-[70px] text-center">
@@ -53,24 +43,22 @@ export default function Ending() {
         <div className="mx-auto mb-5 h-px w-12 bg-gold-soft" />
         {/* e-names(이름 표시)는 목업 원본에서도 주석 처리된 상태 — "루시드 아이콘 같은걸로 이쁘게만들기" 메모 참고, 추후 아이콘 확정 시 노출 */}
 
-        <OutlineButton onClick={handleCopyLink} className="mx-auto mt-10 block w-[200px] py-[13px]">
-          링크 복사하기
-        </OutlineButton>
+        <button
+          onClick={shareKakao}
+          className="mx-auto mt-10 flex w-[230px] cursor-pointer items-center justify-center gap-2 border-none bg-[#FEE500] py-[13px] text-center text-[13px] font-medium tracking-[0.02em] text-[#3A1D1D]"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M8 1.5C4.13 1.5 1 4.02 1 7.13c0 2 1.32 3.75 3.3 4.77-.15.52-.53 1.86-.61 2.15-.1.36.13.36.28.26.11-.08 1.8-1.22 2.53-1.72.48.07.98.11 1.5.11 3.87 0 7-2.52 7-5.63S11.87 1.5 8 1.5Z"
+              fill="#3A1D1D"
+            />
+          </svg>
+          카카오톡으로 공유하기
+        </button>
         <div className="mt-[26px] text-center text-[10.5px] tracking-[0.04em] text-[#B8AF9F]">
           © 2026 WEDDING INVITATION
         </div>
       </div>
-
-      {copied &&
-        typeof document !== 'undefined' &&
-        createPortal(
-          <div className="fixed inset-x-0 bottom-10 z-[200] flex justify-center px-5">
-            <div className="animate-modal-in border border-gold-soft bg-ink px-5 py-3 text-[12.5px] text-white">
-              링크가 복사되었습니다
-            </div>
-          </div>,
-          document.body
-        )}
     </section>
   );
 }
