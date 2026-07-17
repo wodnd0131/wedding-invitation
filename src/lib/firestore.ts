@@ -5,6 +5,7 @@ import {
   orderBy,
   limit,
   getDocs,
+  getDoc,
   deleteDoc,
   doc,
 } from 'firebase/firestore';
@@ -33,14 +34,25 @@ export const getGuestbookEntries = async (pageSize: number = 20) => {
     limit(pageSize)
   );
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Omit<GuestbookEntry, 'id'>),
-  })) as GuestbookEntry[];
+  return snapshot.docs.map((docSnap) => {
+    const data = docSnap.data();
+    return {
+      id: docSnap.id,
+      name: data.name,
+      message: data.message,
+      passwordHash: data.passwordHash,
+      createdAt: data.createdAt?.toDate?.() ?? new Date(),
+    } as GuestbookEntry;
+  });
 };
 
-export const deleteGuestbookEntry = async (entryId: string) => {
-  await deleteDoc(doc(db, 'guestbook', entryId));
+export const deleteGuestbookEntry = async (entryId: string, passwordHash: string) => {
+  const ref = doc(db, 'guestbook', entryId);
+  const snapshot = await getDoc(ref);
+  if (!snapshot.exists() || snapshot.data().passwordHash !== passwordHash) {
+    throw new Error('비밀번호가 일치하지 않습니다.');
+  }
+  await deleteDoc(ref);
 };
 
 // ========== RSVP ==========
