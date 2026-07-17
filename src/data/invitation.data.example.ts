@@ -1,9 +1,9 @@
 // 실제 청첩장 데이터 템플릿.
 // 사용법: 이 파일을 invitation.data.ts로 복사한 뒤 실제 값으로 채우세요.
 // invitation.data.ts는 개인정보를 담고 있어 .gitignore 처리되어 있고, git에 커밋되지 않습니다.
-import { InvitationData } from './invitation.types';
+import { CoreInvitationData } from './invitation.types';
 
-export const invitationData: InvitationData = {
+export const invitationData: CoreInvitationData = {
   groom: {
     name: '홍길동',
     birthDate: '1996-01-01',
@@ -54,8 +54,5 @@ export const invitationData: InvitationData = {
       { role: '신부 아버님', name: '김철수' },
       { role: '신부 어머님', name: '이순자' },
     ],
-  },
-  images: {
-    gallery: Array(6).fill(undefined),
   },
 };

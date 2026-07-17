@@ -10,7 +10,7 @@ import {
   doc,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { GuestbookEntry, RsvpResponse, GalleryPhoto } from '@/types/invitation';
+import { GuestbookEntry, RsvpResponse } from '@/types/invitation';
 
 // ========== Guestbook ==========
 export const addGuestbookEntry = async (
@@ -86,18 +86,4 @@ export const getRsvpResponses = async () => {
       createdAt: data.createdAt?.toDate?.() ?? new Date(),
     } as RsvpResponse;
   });
-};
-
-// ========== Gallery ==========
-export const getGalleryPhotos = async (pageSize: number = 12) => {
-  const q = query(
-    collection(db, 'gallery'),
-    orderBy('uploadedAt', 'desc'),
-    limit(pageSize)
-  );
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Omit<GalleryPhoto, 'id'>),
-  })) as GalleryPhoto[];
 };

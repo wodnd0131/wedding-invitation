@@ -52,3 +52,6 @@ export interface InvitationData {
   };
   images: ImageSlots;
 }
+
+// 이미지 URL은 별도 파일(invitation.images.ts)로 분리 관리되므로, 그걸 뺀 나머지 데이터의 타입
+export type CoreInvitationData = Omit<InvitationData, 'images'>;

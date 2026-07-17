@@ -6,13 +6,6 @@ export interface GuestbookEntry {
   createdAt: Date;
 }
 
-export interface GalleryPhoto {
-  id: string;
-  imageUrl: string;
-  thumbnailUrl: string;
-  uploadedAt: Date;
-}
-
 export interface RsvpResponse {
   id: string;
   name: string;
