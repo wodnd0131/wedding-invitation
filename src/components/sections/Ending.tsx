@@ -14,17 +14,17 @@ export default function Ending() {
         함께 해주셔서 감사합니다.
       </p>
 
-      <div className="ending-wave relative z-10 -mb-5 h-[34px] w-full overflow-hidden leading-none" aria-hidden="true">
+      <div className="ending-wave h-[34px] w-full overflow-hidden leading-none" aria-hidden="true">
         <svg viewBox="0 0 400 34" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-[200%]">
           <path
             d="M0 20 C 25 5, 75 5, 100 20 C 125 35, 175 35, 200 20 C 225 5, 275 5, 300 20 C 325 35, 375 35, 400 20 C 425 5, 475 5, 500 20 C 525 35, 575 35, 600 20 C 625 5, 675 5, 700 20 C 725 35, 775 35, 800 20 L 800 34 L 0 34 Z"
-            fill="#C9A27D"
-            opacity="0.55"
+            fill="var(--color-gold-soft)"
+            opacity="0.45"
           />
           <path
             d="M0 24 C 25 12, 75 12, 100 24 C 125 36, 175 36, 200 24 C 225 12, 275 12, 300 24 C 325 36, 375 36, 400 24 C 425 12, 475 12, 500 24 C 525 36, 575 36, 600 24 C 625 12, 675 12, 700 24 C 725 36, 775 36, 800 24 L 800 34 L 0 34 Z"
-            fill="#B27A45"
-            opacity="0.7"
+            fill="var(--color-wine)"
+            opacity="0.3"
           />
         </svg>
       </div>
