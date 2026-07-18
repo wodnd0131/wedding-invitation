@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { AccordionItem, SectionHeading } from '@/design-system';
+import { useRef, useState } from 'react';
+import { AccordionItem, SectionHeading, Toast } from '@/design-system';
 import { invitationData, AccountEntry } from '@/data/invitation';
 
 interface AccountRowProps {
@@ -36,6 +36,8 @@ function AccountRow({ entry, id, copiedId, onCopy }: AccountRowProps) {
 
 export default function Account() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { groom, bride } = invitationData.accounts;
 
   const handleCopy = (id: string, text: string) => {
@@ -44,6 +46,10 @@ export default function Account() {
       setTimeout(() => {
         setCopiedId((cur) => (cur === id ? null : cur));
       }, 1200);
+
+      setToastMessage('계좌번호가 복사되었습니다');
+      if (toastTimeout.current) clearTimeout(toastTimeout.current);
+      toastTimeout.current = setTimeout(() => setToastMessage(null), 1800);
     });
   };
 
@@ -72,6 +78,8 @@ export default function Account() {
           </AccordionItem>
         </div>
       </div>
+
+      <Toast message={toastMessage} />
     </section>
   );
 }

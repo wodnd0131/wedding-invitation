@@ -4,3 +4,4 @@ export { PlaceholderImage } from './PlaceholderImage';
 export { OutlineButton } from './OutlineButton';
 export { Modal } from './Modal';
 export { AccordionItem } from './AccordionItem';
+export { Toast } from './Toast';
