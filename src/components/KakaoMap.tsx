@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { buildMapLinks } from '@/lib/map';
 
 interface KakaoMapProps {
   address: string;
@@ -28,6 +29,7 @@ export function KakaoMap({ address, name, className = '' }: KakaoMapProps) {
         geocoder.addressSearch(address, (result: { x: string; y: string }[], status: string) => {
           if (cancelled || !containerRef.current) return;
           if (status !== kakao.maps.services.Status.OK || result.length === 0) {
+            console.log('[KakaoMap] geocode failed', { address, status });
             setFailed(true);
             return;
           }
@@ -52,7 +54,10 @@ export function KakaoMap({ address, name, className = '' }: KakaoMapProps) {
     const script = document.createElement('script');
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${appkey}&autoload=false&libraries=services`;
     script.onload = renderMap;
-    script.onerror = () => setFailed(true);
+    script.onerror = () => {
+      console.log('[KakaoMap] sdk script load failed');
+      setFailed(true);
+    };
     document.head.appendChild(script);
 
     return () => {
@@ -61,13 +66,15 @@ export function KakaoMap({ address, name, className = '' }: KakaoMapProps) {
   }, [address, name, appkey]);
 
   if (failed) {
+    const kakaoMapHref = buildMapLinks(address).find((link) => link.label === '카카오맵')!.href;
     return (
-      <div
-        className={`flex items-end justify-center border border-gold-soft bg-cover bg-center text-center ${className}`}
+      <a
+        href={kakaoMapHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`block border border-gold-soft bg-cover bg-center ${className}`}
         style={{ backgroundImage: 'url(/map.png)' }}
-      >
-        <span className="mb-2 bg-white/80 px-2 py-0.5 text-[11px] text-ink-soft">지도를 불러오지 못했습니다</span>
-      </div>
+      />
     );
   }
 
