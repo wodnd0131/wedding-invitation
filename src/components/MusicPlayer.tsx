@@ -42,7 +42,7 @@ export function MusicPlayer() {
       <button
         onClick={toggle}
         aria-label={playing ? '배경음악 정지' : '배경음악 재생'}
-        className="fixed bottom-4 right-[max(1rem,calc((100vw-480px)/2+1rem))] z-[90] flex h-10 w-10 cursor-pointer items-center justify-center text-wine"
+        className="fixed bottom-[11px] right-[calc(max(1rem,calc((100vw-480px)/2+1rem))-10px)] z-[90] flex h-10 w-10 cursor-pointer items-center justify-center text-wine"
       >
         {playing ? (
           <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
