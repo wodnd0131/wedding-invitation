@@ -15,7 +15,7 @@ const GRADIENTS = {
 
 export function PlaceholderImage({ label, className = '', variant = 'default', src, alt = '' }: PlaceholderImageProps) {
   if (src) {
-    return <img src={src} alt={alt} className={`border border-gold-soft object-cover ${className}`} />;
+    return <img src={src} alt={alt} className={`block border border-gold-soft object-cover ${className}`} />;
   }
 
   return (
