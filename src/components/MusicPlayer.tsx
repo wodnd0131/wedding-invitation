@@ -7,7 +7,22 @@ export function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = 0.3;
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.3;
+
+    audio
+      .play()
+      .then(() => setPlaying(true))
+      .catch(() => {
+        const tryPlay = () => {
+          document.removeEventListener('click', tryPlay);
+          document.removeEventListener('touchstart', tryPlay);
+          audio.play().then(() => setPlaying(true)).catch(() => {});
+        };
+        document.addEventListener('click', tryPlay);
+        document.addEventListener('touchstart', tryPlay);
+      });
   }, []);
 
   const toggle = () => {
