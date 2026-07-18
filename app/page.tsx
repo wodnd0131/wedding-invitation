@@ -2,6 +2,7 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Divider } from '@/design-system';
+import { MusicPlayer } from '@/components/MusicPlayer';
 import Hero from '@/components/sections/Hero';
 import Invitation from '@/components/sections/Invitation';
 import WeddingDay from '@/components/sections/WeddingDay';
@@ -18,6 +19,7 @@ export default function Home() {
   return (
     <div className="flex justify-center bg-panel">
       <div ref={scrollRef} className="relative min-h-screen w-full max-w-[480px] overflow-hidden bg-ivory">
+        <MusicPlayer />
         <Hero />
         <Divider />
         <Invitation />
