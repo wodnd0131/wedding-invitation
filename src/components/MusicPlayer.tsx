@@ -31,18 +31,15 @@ export function MusicPlayer() {
       >
         {playing ? (
           <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
-            <rect x="5" y="1" width="4" height="7" rx="2" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M3 7a4 4 0 0 0 8 0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="7" y1="11" x2="7" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="4.5" y1="13" x2="9.5" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            <polygon points="6 3 3.5 5 1.5 5 1.5 9 3.5 9 6 11" fill="currentColor" />
+            <path d="M8 5.3c1 .8 1 2.6 0 3.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            <path d="M9.8 3.8c2 1.5 2 4.9 0 6.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
         ) : (
           <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
-            <rect x="5" y="1" width="4" height="7" rx="2" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M3 7a4 4 0 0 0 8 0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="7" y1="11" x2="7" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="4.5" y1="13" x2="9.5" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="1.5" y1="1.5" x2="12.5" y2="12.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            <polygon points="6 3 3.5 5 1.5 5 1.5 9 3.5 9 6 11" fill="currentColor" />
+            <line x1="8.5" y1="4.5" x2="13" y2="9.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            <line x1="13" y1="4.5" x2="8.5" y2="9.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
           </svg>
         )}
       </button>
