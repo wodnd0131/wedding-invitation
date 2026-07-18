@@ -18,7 +18,8 @@ export default function GuestbookWriteModal({ isOpen, onClose, onSuccess }: Gues
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const ready = name.trim().length > 0 && password.trim().length > 0 && message.trim().length > 0;
+  const MIN_MESSAGE_LENGTH = 8;
+  const ready = name.trim().length > 0 && password.trim().length > 0 && message.trim().length >= MIN_MESSAGE_LENGTH;
 
   const reset = () => {
     setName('');
@@ -91,6 +92,9 @@ export default function GuestbookWriteModal({ isOpen, onClose, onSuccess }: Gues
           rows={4}
           className="w-full resize-y border border-line bg-white px-[14px] py-3 font-serif-kr text-[13.5px] text-ink focus:border-wine focus:outline-none"
         />
+        <div className="mt-1.5 text-right text-[11px] text-ink-soft">
+          {message.trim().length} / 최소 {MIN_MESSAGE_LENGTH}자
+        </div>
       </div>
 
       {error && <div className="mb-3 text-center text-[12px] text-wine">{error}</div>}

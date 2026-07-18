@@ -17,10 +17,9 @@ interface GuestbookListModalProps {
   isOpen: boolean;
   onClose: () => void;
   entries: GuestbookEntry[];
-  onDelete: (id: string) => void;
 }
 
-export default function GuestbookListModal({ isOpen, onClose, entries, onDelete }: GuestbookListModalProps) {
+export default function GuestbookListModal({ isOpen, onClose, entries }: GuestbookListModalProps) {
   const [page, setPage] = useState(0);
 
   const totalPages = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
@@ -41,15 +40,7 @@ export default function GuestbookListModal({ isOpen, onClose, entries, onDelete 
           <div>
             {pageEntries.map((entry) => (
               <div key={entry.id} className="border-b border-line py-4">
-                <div className="mb-1.5 flex items-center justify-between">
-                  <span className="text-[13.5px] font-semibold">from. {entry.name}</span>
-                  <button
-                    onClick={() => onDelete(entry.id)}
-                    className="cursor-pointer border-none bg-transparent text-[11px] text-ink-soft underline underline-offset-2"
-                  >
-                    삭제
-                  </button>
-                </div>
+                <div className="mb-1.5 text-[13.5px] font-semibold">from. {entry.name}</div>
                 <div className="mb-1.5 text-[12.5px] leading-[1.8] text-ink-soft">{entry.message}</div>
                 <div className="text-[11px] text-[#B8AF9F]">{formatDate(entry.createdAt)}</div>
               </div>

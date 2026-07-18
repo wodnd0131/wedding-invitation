@@ -10,7 +10,7 @@ interface KakaoMapProps {
 
 export function KakaoMap({ address, name, className = '' }: KakaoMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const appkey = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
+  const appkey = process.env.NEXT_PUBLIC_KAKAO_MAPS_JS_KEY || process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
   const [failed, setFailed] = useState(!appkey);
 
   useEffect(() => {

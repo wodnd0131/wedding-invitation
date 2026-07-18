@@ -5,7 +5,6 @@ import { OutlineButton, SectionHeading } from '@/design-system';
 import { getGuestbookEntries } from '@/lib/firestore';
 import { GuestbookEntry } from '@/types/invitation';
 import GuestbookWriteModal from '@/components/modals/GuestbookWriteModal';
-import GuestbookDeleteModal from '@/components/modals/GuestbookDeleteModal';
 import GuestbookListModal from '@/components/modals/GuestbookListModal';
 
 const PREVIEW_COUNT = 5;
@@ -22,7 +21,6 @@ export default function Guestbook() {
   const [loading, setLoading] = useState(true);
   const [writeOpen, setWriteOpen] = useState(false);
   const [listOpen, setListOpen] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const fetchEntries = useCallback(async () => {
     try {
@@ -57,15 +55,7 @@ export default function Guestbook() {
       <div className="reveal-group">
         {preview.map((entry) => (
           <div key={entry.id} className="reveal-child border-b border-line py-4">
-            <div className="mb-1.5 flex items-center justify-between">
-              <span className="text-[13.5px] font-semibold">from. {entry.name}</span>
-              <button
-                onClick={() => setDeleteTarget(entry.id)}
-                className="cursor-pointer border-none bg-transparent text-[11px] text-ink-soft underline underline-offset-2"
-              >
-                삭제
-              </button>
-            </div>
+            <div className="mb-1.5 text-[13.5px] font-semibold">from. {entry.name}</div>
             <div className="mb-1.5 text-[12.5px] leading-[1.8] text-ink-soft">{entry.message}</div>
             <div className="text-[11px] text-[#B8AF9F]">{formatDate(entry.createdAt)}</div>
           </div>
@@ -81,18 +71,7 @@ export default function Guestbook() {
       </button>
 
       <GuestbookWriteModal isOpen={writeOpen} onClose={() => setWriteOpen(false)} onSuccess={fetchEntries} />
-      <GuestbookListModal
-        isOpen={listOpen}
-        onClose={() => setListOpen(false)}
-        entries={entries}
-        onDelete={(id) => setDeleteTarget(id)}
-      />
-      <GuestbookDeleteModal
-        isOpen={deleteTarget !== null}
-        entryId={deleteTarget}
-        onClose={() => setDeleteTarget(null)}
-        onSuccess={fetchEntries}
-      />
+      <GuestbookListModal isOpen={listOpen} onClose={() => setListOpen(false)} entries={entries} />
     </section>
   );
 }

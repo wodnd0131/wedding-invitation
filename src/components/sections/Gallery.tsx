@@ -28,9 +28,6 @@ export default function Gallery() {
           )
         )}
       </div>
-      <a href="#" className="mt-[22px] block text-center text-[12.5px] tracking-[0.05em] text-wine underline underline-offset-4">
-        더보기
-      </a>
 
       {openIndex !== null && (
         <GalleryLightbox images={gallery} index={openIndex} onClose={() => setOpenIndex(null)} onNavigate={setOpenIndex} />

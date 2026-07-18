@@ -5,7 +5,6 @@ import {
   orderBy,
   limit,
   getDocs,
-  getDoc,
   deleteDoc,
   doc,
 } from 'firebase/firestore';
@@ -44,15 +43,6 @@ export const getGuestbookEntries = async (pageSize: number = 20) => {
       createdAt: data.createdAt?.toDate?.() ?? new Date(),
     } as GuestbookEntry;
   });
-};
-
-export const deleteGuestbookEntry = async (entryId: string, passwordHash: string) => {
-  const ref = doc(db, 'guestbook', entryId);
-  const snapshot = await getDoc(ref);
-  if (!snapshot.exists() || snapshot.data().passwordHash !== passwordHash) {
-    throw new Error('비밀번호가 일치하지 않습니다.');
-  }
-  await deleteDoc(ref);
 };
 
 // 관리자 페이지 전용 — 비밀번호 대조 없이 바로 삭제
