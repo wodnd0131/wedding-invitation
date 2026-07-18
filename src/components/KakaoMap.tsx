@@ -63,9 +63,10 @@ export function KakaoMap({ address, name, className = '' }: KakaoMapProps) {
   if (failed) {
     return (
       <div
-        className={`flex items-center justify-center border border-gold-soft text-center text-[12.5px] text-ink-soft ${className}`}
+        className={`flex items-end justify-center border border-gold-soft bg-cover bg-center text-center ${className}`}
+        style={{ backgroundImage: 'url(/map.png)' }}
       >
-        지도를 불러오지 못했습니다
+        <span className="mb-2 bg-white/80 px-2 py-0.5 text-[11px] text-ink-soft">지도를 불러오지 못했습니다</span>
       </div>
     );
   }
